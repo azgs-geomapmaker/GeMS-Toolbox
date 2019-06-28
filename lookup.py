@@ -23,31 +23,3 @@ response_as_json = json.loads(response)
 # TODO improve flexibility of call, possibly remove hard-coded indent level
 arcpy.AddMessage(json.dumps(response_as_json, indent=4))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-#parsing response
-# r = urllib.request.urlopen(req).read()
-# print(r)
-# cont = json.loads(r.decode('utf-8'))
-# counter = 0
-#
-# ##parcing json
-# for item in cont['data']['children']:
-#     counter += 1
-#     print("strat_name:", item['data']['strat_name'], "strat_name_long:", item['data']['strat_name_long'])
-#     print("----")
-#
-# ##print formated
-# #print (json.dumps(cont, indent=4, sort_keys=True))
-# print("Number of names: ", counter)
