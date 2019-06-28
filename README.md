@@ -2,8 +2,9 @@
 
 
 ## Features
-*Strat Name Look Up
-*MapUnitPoly Neighbors
+
+* Strat Name Look Up
+* MapUnitPoly Neighbors
 
 
 ## Instructions
