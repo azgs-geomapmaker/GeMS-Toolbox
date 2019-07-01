@@ -13,7 +13,9 @@
 ArcGIS Pro
 
 ArcGIS Desktop
-
+* Download and unzip
+* Open ArcMap (NOTE: make sure you have admin rights on your computer or the next steps will not work!)
+* Find and open the Geoprocessing ArcToolbox window (Menu > Geoprocessing > ArcToolbox)
 
 ## Issues
 
