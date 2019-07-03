@@ -7,6 +7,7 @@
 * MapUnitPoly Neighbors- Checking adjacent polygons for duplication
 * Transfer Data(NCGMP09 to GeMS)
 * GeMS validation for Arcgis Pro
+* Create New GeMS Database
 
 
 ## Instructions
