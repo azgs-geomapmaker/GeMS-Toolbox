@@ -1,4 +1,4 @@
-# GeMS_CreateDatabase_Arc10.1.py
+# GeMS_CreateDatabase_ArcPro.py
 #   Python script to create an empty NCGMP09-style
 #   ArcGIS 10 geodatabase for geologic map data
 #
@@ -18,7 +18,7 @@ import arcpy, sys, os, os.path
 from GeMS_Definition import tableDict, GeoMaterialConfidenceValues, DefaultExIDConfidenceValues
 from GeMS_utilityFunctions import *
 
-versionString = 'GeMS_CreateDatabase_Arc10.py, version of 4 March 2018'
+versionString = 'GeMS_CreateDatabase_ArcPro.py, version of 3 July 2019'
 
 debug = True
 
