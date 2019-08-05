@@ -1,20 +1,18 @@
-import arcpy, os, sys
+import arcpy, os, shutil, sys
 
-gdb = "C:/output/PolyCheck.gdb"
+# Path to store geoprocessing files
+user_profile_path = os.environ['USERPROFILE']
+gdb = r"{}/AppData/Local/Temp/PolyChecker/PolyCheck.gdb".format(user_profile_path)
 
+# GDB already exists, delete it
 if arcpy.Exists(gdb):
-    arcpy.Delete_management(gdb)
-    arcpy.AddMessage(arcpy.GetMessages())
+    shutil.rmtree(r"{}/AppData/Local/Temp/PolyChecker".format(user_profile_path))
 
-if not os.path.exists(os.path.dirname(gdb)):
-    os.mkdir(os.path.dirname(gdb))
+# Create fresh GDB path
+os.makedirs(os.path.dirname(gdb))
 
+# Create GDB
 arcpy.CreateFileGDB_management(os.path.dirname(gdb), os.path.basename(gdb))
-arcpy.AddMessage(arcpy.GetMessages())
-
-arcpy.env.workspace = gdb
-
-arcpy.AddMessage(gdb)
 
 # Script arguments
 MapUnitPolys = arcpy.GetParameterAsText(0)
@@ -26,12 +24,11 @@ MapUnitPolys_CopyFeatures = arcpy.GetParameterAsText(1)
 # Set Geoprocessing environments
 MapUnitPolys = MapUnitPolys
 
-Polygon_Neighbors = r"C:/output/PolyCheck.gdb/polytest"
+Polygon_Neighbors = "{}/polytest".format(gdb)
 
-PolygonNeighbor_TableSelect = r"C:/output/PolyCheck.gdb/PolygonNeighbor_TableSelect"
+PolygonNeighbor_TableSelect = "{}/PolygonNeighbor_TableSelect".format(gdb)
 
-inFeatures_lyr = r"C:/output/PolyCheck.gdb/inFeatures_lyr"
-
+inFeatures_lyr = "{}/inFeatures_1yr".format(gdb)
 
 # Process: Polygon Neighbors
 arcpy.PolygonNeighbors_analysis(MapUnitPolys, Polygon_Neighbors, "OBJECTID;MapUnit", "NO_AREA_OVERLAP", "BOTH_SIDES",
@@ -52,7 +49,6 @@ if int(arcpy.GetCount_management(PolygonNeighbor_TableSelect)[0]) > 0:
 else:
     print ("done")
 
-
 # Process: Add Join
 arcpy.AddJoin_management(inFeatures_lyr, "OBJECTID", PolygonNeighbor_TableSelect, "src_OBJECTID", "KEEP_COMMON")
 
@@ -66,6 +62,5 @@ arcpy.RemoveJoin_management(inFeatures_lyr, "")
 arcpy.Delete_management(PolygonNeighbor_TableSelect)
 arcpy.Delete_management(Polygon_Neighbors)
 
-#
 arcpy.AddMessage('All done! Check Polygons')
-#arcpy.AddMessage(arcpy.GetMessages())
+
