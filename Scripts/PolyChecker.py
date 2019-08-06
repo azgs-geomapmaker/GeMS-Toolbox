@@ -24,6 +24,18 @@ MapUnitPolys_CopyFeatures = arcpy.GetParameterAsText(1)
 # Set Geoprocessing environments
 MapUnitPolys = MapUnitPolys
 
+# Validate that all Polygons have a map unit
+# or the python "None" type. Verify that this is how an empty MapUnit will be reflected in the script
+with arcpy.da.SearchCursor(MapUnitPolys, ['SHAPE@', 'MapUnit', 'OBJECTID']) as cursor:
+    for row in cursor:
+        #arcpy.AddMessage(str(row[1]))
+        # Does this Polygon have a map unit
+        if row[1] == "" or row[1] is None or row[1] is 0:
+            arcpy.AddMessage('Polygon OBJECT ID:{} is missing map unit... exiting.'.format(row[2]))
+            sys.exit(1)
+            #arcpy.AddMessage("Polygon {} is missing map unit".format(row.OBJECTID))
+            #sys.exit(1)
+
 Polygon_Neighbors = "{}/polytest".format(gdb)
 
 PolygonNeighbor_TableSelect = "{}/PolygonNeighbor_TableSelect".format(gdb)
