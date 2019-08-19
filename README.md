@@ -5,8 +5,8 @@
 
 * Strat Name Look Up
 * MapUnitPoly Neighbors- Checking adjacent polygons for duplication
-* Transfer Data(NCGMP09 to GeMS)
-* GeMS validation for Arcgis Pro
+* Transfer Data (NCGMP09 to GeMS) Arcmap Only
+* GeMS validation
 * Create New GeMS Database
 
 
