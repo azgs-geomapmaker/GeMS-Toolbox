@@ -12,6 +12,8 @@
 
 ## Instructions
 ArcGIS Pro
+* Download and unzip
+* Open the catalog view and click Project or Toolboxes in the Contents pane. On the Catalog tab on the ribbon, click the Add drop-down arrow and right click Add Toolbox.
 
 ArcGIS Desktop
 * Download and unzip
