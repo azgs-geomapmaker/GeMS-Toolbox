@@ -54,7 +54,7 @@ PolygonNeighbor_TableSelect = "{}/PolygonNeighbor_TableSelect".format(gdb)
 
 inFeatures_lyr = "Polygon_Neighbors_tv".format(gdb)
 
-dropFields = ["MapUnitPolys_IdentityConfidence", "PolygonNeighbor_TableSelect_NODE_COUNT", "MapUnitPolys_Label", "MapUnitPolys_Notes", "MapUnitPolys_Symbol"]
+dropFields = ["MapUnitPolys_IdentityConfidence", "PolygonNeighbor_TableSelect_NODE_COUNT", "MapUnitPolys_Label", "MapUnitPolys_Notes", "MapUnitPolys_Symbol", "PolygonNeighbor_TableSelect_OBJECTID"]
 
 # Process: Polygon Neighbors
 arcpy.PolygonNeighbors_analysis(MapUnitPolys, Polygon_Neighbors, "OBJECTID;MapUnit", "NO_AREA_OVERLAP", "BOTH_SIDES",
