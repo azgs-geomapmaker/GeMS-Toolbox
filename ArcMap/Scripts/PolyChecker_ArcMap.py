@@ -12,8 +12,9 @@ if not arcpy.Exists(gdb):
     arcpy.CreateFileGDB_management(os.path.dirname(gdb), os.path.basename(gdb))
 
 arcpy.AddMessage('xxx' + str(arcpy.Exists(gdb)) + ' ' + os.path.dirname(gdb))
-arcpy.env.workspace = gdb
+#arcpy.env.workspace = gdb
 arcpy.env.overwriteOutput = True
+
 
 ##
 
@@ -53,6 +54,8 @@ PolygonNeighbor_TableSelect = "{}/PolygonNeighbor_TableSelect".format(gdb)
 
 inFeatures_lyr = "Polygon_Neighbors_tv".format(gdb)
 
+dropFields = ["MapUnitPolys_IdentityConfidence", "PolygonNeighbor_TableSelect_NODE_COUNT", "MapUnitPolys_Label", "MapUnitPolys_Notes", "MapUnitPolys_Symbol"]
+
 # Process: Polygon Neighbors
 arcpy.PolygonNeighbors_analysis(MapUnitPolys, Polygon_Neighbors, "OBJECTID;MapUnit", "NO_AREA_OVERLAP", "BOTH_SIDES",
                                 "", "METERS", "SQUARE_METERS")
@@ -80,7 +83,12 @@ arcpy.AddJoin_management(inFeatures_lyr, "OBJECTID", PolygonNeighbor_TableSelect
 # Process: Copy Features
 arcpy.CopyFeatures_management(inFeatures_lyr, MapUnitPolys_CopyFeatures, "", "0", "0", "0")
 
-#arcpy.DeleteField_management("MapUnitPolys_CopyFeatures"["IdentityConfidence", "NODE_COUNT", "OBJECTID", "Label", "Notes", "Symbol"])
+#  Delete Fields in output
+
+arcpy.DeleteField_management(MapUnitPolys_CopyFeatures, dropFields)
+
+
+arcpy.AddMessage(MapUnitPolys_CopyFeatures)
 
 # Process: Remove Join
 arcpy.RemoveJoin_management(inFeatures_lyr, "")

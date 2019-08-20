@@ -47,9 +47,12 @@ PolygonNeighbor_TableSelect = "{}/PolygonNeighbor_TableSelect".format(gdb)
 
 inFeatures_lyr = "{}/inFeatures_1yr".format(gdb)
 
+dropFields = ["MapUnitPolys_IdentityConfidence", "PolygonNeighbor_TableSelect_NODE_COUNT", "MapUnitPolys_Label", "MapUnitPolys_Notes", "MapUnitPolys_Symbol", "PolygonNeighbor_TableSelect_OBJECTID"]
+
 # Process: Polygon Neighbors
 arcpy.PolygonNeighbors_analysis(MapUnitPolys, Polygon_Neighbors, "OBJECTID;MapUnit", "NO_AREA_OVERLAP", "BOTH_SIDES",
                                 "", "METERS", "SQUARE_METERS")
+								
 
 # Process: Select Layer By Attribute
 arcpy.SelectLayerByAttribute_management(Polygon_Neighbors, "NEW_SELECTION", "src_MapUnit = nbr_MapUnit")
@@ -72,6 +75,10 @@ arcpy.AddJoin_management(inFeatures_lyr, "OBJECTID", PolygonNeighbor_TableSelect
 # Process: Copy Features
 arcpy.CopyFeatures_management(inFeatures_lyr, MapUnitPolys_CopyFeatures, "", "0", "0", "0")
 
+#  Delete Fields in output
+
+arcpy.DeleteField_management(MapUnitPolys_CopyFeatures, dropFields)
+
 # Process: Remove Join
 arcpy.RemoveJoin_management(inFeatures_lyr, "")
 
@@ -80,4 +87,5 @@ arcpy.Delete_management(PolygonNeighbor_TableSelect)
 arcpy.Delete_management(Polygon_Neighbors)
 
 arcpy.AddMessage('All done! Check Polygons')
+
 
