@@ -11,15 +11,13 @@ if not arcpy.Exists(gdb):
         os.makedirs(os.path.dirname(gdb))
     arcpy.CreateFileGDB_management(os.path.dirname(gdb), os.path.basename(gdb))
 
-arcpy.AddMessage('xxx' + str(arcpy.Exists(gdb)) + ' ' + os.path.dirname(gdb))
-#arcpy.env.workspace = gdb
+arcpy.AddMessage(str(arcpy.Exists(gdb)) + ' ' + os.path.dirname(gdb))
+arcpy.env.workspace = gdb
 arcpy.env.overwriteOutput = True
 
 
 ##
 
-# Create GDB
-#arcpy.CreateFileGDB_management(os.path.dirname(gdb), os.path.basename(gdb))
 
 # Script arguments
 MapUnitPolys = arcpy.GetParameterAsText(0)
@@ -37,7 +35,6 @@ invalid_polygon_found = False
 
 with arcpy.da.SearchCursor(MapUnitPolys, ['SHAPE@', 'MapUnit', 'OBJECTID']) as cursor:
     for row in cursor:
-        #arcpy.AddMessage(str(row[1]))
         # Does this Polygon have a map unit
         if row[1] == "" or row[1] == "<Null>" or row[1] is None or row[1] is 0:
             invalid_polygon_found = True
@@ -46,6 +43,7 @@ with arcpy.da.SearchCursor(MapUnitPolys, ['SHAPE@', 'MapUnit', 'OBJECTID']) as c
 
 # Invalid polygons were found, terminate
 if (invalid_polygon_found):
+    arcpy.AddMessage("Check results and fill in the missing map unit")
     sys.exit(1)
 
 Polygon_Neighbors = "{}/polytest".format(gdb)
@@ -61,7 +59,7 @@ arcpy.PolygonNeighbors_analysis(MapUnitPolys, Polygon_Neighbors, "OBJECTID;MapUn
                                 "", "METERS", "SQUARE_METERS")
 
 
-Polygon_Neighbors_tv = arcpy.MakeTableView_management (Polygon_Neighbors, "Polygon_Neighbors_tv") [0]
+Polygon_Neighbors_tv = arcpy.MakeTableView_management(Polygon_Neighbors, "Polygon_Neighbors_tv")[0]
 # Process: Select Layer By Attribute
 arcpy.SelectLayerByAttribute_management(Polygon_Neighbors_tv, "NEW_SELECTION", "src_MapUnit = nbr_MapUnit")
 
@@ -72,10 +70,13 @@ arcpy.GetCount_management(PolygonNeighbor_TableSelect)
 
 arcpy.AddMessage(arcpy.GetMessages())
 
+#  No Polygons were found, Terminate
+
 if int(arcpy.GetCount_management(PolygonNeighbor_TableSelect)[0]) > 0:
     arcpy.MakeFeatureLayer_management(MapUnitPolys, inFeatures_lyr)
 else:
-    print ("done")
+    arcpy.AddMessage("done! No polygons need to be checked")
+    sys.exit(1)
 
 # Process: Add Join
 arcpy.AddJoin_management(inFeatures_lyr, "OBJECTID", PolygonNeighbor_TableSelect, "src_OBJECTID", "KEEP_COMMON")
