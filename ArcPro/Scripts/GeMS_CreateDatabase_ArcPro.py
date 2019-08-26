@@ -298,7 +298,7 @@ def main(thisDB,coordSystem,nCrossSections):
                 if cartoReps and hasReps:
                     addMsgAndPrint('    Adding cartographic representations to '+fc)
                     try:
-                        arcpy.AddRepresentation_cartography(fc,fc+'_rep1','RuleID1','Override1',default,repLyr,'NO_ASSIGN')
+                        arcpy.AddRepresentation_cartography(fc,fc+'_rep1','RuleID','Override1',default,repLyr,'NO_ASSIGN')
                         """
                             Note the 1 suffix on the representation name (fc+'_rep1') and the RuleID1 and Override1 fields.
                         If at some later time we wish to add additional representations to a feature class, each will
