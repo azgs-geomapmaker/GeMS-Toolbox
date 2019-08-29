@@ -7,10 +7,10 @@ import json
 import arcpy
 
 # Parameter passed from Arc tool
-in_workspace = arcpy.GetParameterAsText(0)
+unit_name = arcpy.GetParameterAsText(0)
 
 # Macrostrat URL (with appended parameter from user)
-url = 'http://macrostrat.org/api/v2/defs/strat_names?strat_name_like=' + in_workspace
+url = 'http://macrostrat.org/api/v2/defs/strat_names?strat_name_like=' + unit_name
 
 arcpy.AddMessage('before hitting API url')
 arcpy.AddMessage(url)
