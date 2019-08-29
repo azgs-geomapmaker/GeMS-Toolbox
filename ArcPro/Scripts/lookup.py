@@ -19,7 +19,8 @@ arcpy.AddMessage(url)
 response = urllib.request.urlopen(url).read().decode()
 response_as_json = json.loads(response)
 
+
 # Send back response as JSON
 # TODO improve flexibility of call, possibly remove hard-coded indent level
-arcpy.AddMessage(json.dumps(response_as_json, indent=4))
+arcpy.AddMessage(json.dumps(response_as_json, sort_keys=True, indent=4))
 
