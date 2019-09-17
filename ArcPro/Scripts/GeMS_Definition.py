@@ -17,7 +17,8 @@ versionString = 'GeMS_Definition.py, version of 6 October 2017'
 # 27 March 2017: order of tables in startDict revised to conform with documentation. Fields reordered and amended to conform with documentation
 # 20 May 2017: MapUnitOverlayPolys and OverlayPolys (new names) changed to conform to v2 draft. MapUnitLabelPoints removed.
 # 6 October 2017: In IsoValueLines definition, changed LocationConfidenceMeters to ValueConfidence
-# 8 October 2017: ValueConfidence and URL added to attribDict[]
+# 8 October 2017: ValueConfidence and URL added to attribDict
+# 17 September 2019: Changed Notes Field to memoLength
 
 # to think about: Maybe change all NoNulls to NullsOK?
 
